@@ -107,42 +107,47 @@ def display_prediction(image_path, prediction_result, class_names):
 
 def main():
     import argparse
-    
+    import os
+
     # Define class names (should match the order from training)
     CLASS_NAMES = ['Healthy', 'Powdery', 'Rust']
-    
-    # Default image path - you can change this to any image you want to test
-    DEFAULT_IMAGE_PATH = "C:/Users/heman/Plant_Disease/data/val/Rust/8219aa662e8fd59d.jpg"
-    
+
+    # Use a relative default image path (place a sample image in the repo)
+    DEFAULT_IMAGE_PATH = os.path.join('data', 'val', 'Rust', 'sample_image.jpg')
+
+    # Use a relative model path
+    DEFAULT_MODEL_PATH = os.path.join('models', 'best_model.pth')
+
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Predict plant disease from an image')
     parser.add_argument('--image_path', type=str, default=DEFAULT_IMAGE_PATH,
-                      help='Path to the image file')
-    parser.add_argument('--model', type=str, default='C:/Users/heman/Plant_Disease/models/best_model.pth',
-                      help='Path to the trained model')
+                        help='Path to the image file')
+    parser.add_argument('--model', type=str, default=DEFAULT_MODEL_PATH,
+                        help='Path to the trained model')
     parser.add_argument('--no-display', action='store_true',
-                      help='Disable displaying the image with prediction')
-    
+                        help='Disable displaying the image with prediction')
+
     args = parser.parse_args()
-    
+
     # Make prediction
     img_path = args.image_path
     print(f"\nUsing image: {img_path}")
     result = predict_image(img_path, args.model, CLASS_NAMES)
-    
+
     # Print results
     print(f"\nPrediction Results:")
     print(f"- Predicted class: {result['predicted_class']}")
     print(f"- Confidence: {result['confidence']:.2f}%")
-    
+
     if result['top_predictions']:
         print("\nTop 3 predictions:")
         for i, pred in enumerate(result['top_predictions']):
             print(f"{i+1}. {pred['class']}: {pred['probability']:.2f}%")
-    
+
     # Display the image with prediction if not disabled
     if not args.no_display:
         display_prediction(args.image_path, result, CLASS_NAMES)
 
 if __name__ == '__main__':
     main()
+
