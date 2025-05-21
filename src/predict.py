@@ -113,7 +113,7 @@ def main():
     CLASS_NAMES = ['Healthy', 'Powdery', 'Rust']
 
     # Use a relative default image path (place a sample image in the repo)
-    DEFAULT_IMAGE_PATH = os.path.join('data', 'val', 'Rust', 'sample_image.jpg')
+    DEFAULT_IMAGE_PATH = os.path.join('data', 'val', 'Rust', '963ffc6b98d60940.jpg')
 
     # Use a relative model path
     DEFAULT_MODEL_PATH = os.path.join('models', 'best_model.pth')
